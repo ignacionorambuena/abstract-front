@@ -11,12 +11,15 @@ class ListadoPartidos extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: true,
+      show: false,
       listaTipoPartido: [],
       listaRecintoDeportivo: [],
       form: {
         name: '',
-        tipoPartido: ''
+        tipoPartido: '',
+        recintoDeportivo: '',
+        date: '',
+        hour: ''
       }
     };
   }
@@ -28,8 +31,8 @@ class ListadoPartidos extends Component {
           this.setState({ listaTipoPartido: res.data });
         }
       });
-    
-      axios.get(`${recintoDeportivo}`)
+
+    axios.get(`${recintoDeportivo}`)
       .then(res => {
         if (res.data.length > 0) {
           this.setState({ listaRecintoDeportivo: res.data });
@@ -48,6 +51,18 @@ class ListadoPartidos extends Component {
       }
       case "cmbTipoPartido": {
         data.tipoPartido = evento.target.value;
+        break;
+      }
+      case "cmbRecintoDeportivo": {
+        data.recintoDeportivo = evento.target.value;
+        break;
+      }
+      case "inputDate": {
+        data.date = evento.target.value;
+        break;
+      }
+      case "inputHour": {
+        data.hour = evento.target.value;
         break;
       }
       default:
@@ -141,7 +156,7 @@ class ListadoPartidos extends Component {
                       </Col>
                     </Form.Group>
 
-                    <Form.Group as={Row} controlId="cmbRecinto">
+                    <Form.Group as={Row} controlId="cmbRecintoDeportivo">
                       <Form.Label column sm="3">
                         Recinto Deportivo
                       </Form.Label>
@@ -152,23 +167,51 @@ class ListadoPartidos extends Component {
                         >
                           <option>Seleccione</option>
                           {
-                            this.state.listaTipoPartido.map((x, ind) => {
-                              return (<option key={ind} value={x.id}>{x.nombre}</option>)
+                            this.state.listaRecintoDeportivo.map((x, ind) => {
+                              return (<option key={ind} value={x.ID}>{x.name}</option>)
                             })
                           }
                         </Form.Control>
                       </Col>
                     </Form.Group>
+
+                    <Form.Group as={Row} controlId="inputDate">
+                      <Form.Label column sm="3">
+                        Fecha partido
+                      </Form.Label>
+                      <Col sm="9">
+                        <Form.Control
+                          type="date"
+                          value={this.state.form.date}
+                          onChange={this.cambioEstadoFormulario}
+                        />
+                      </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="inputHour">
+                      <Form.Label column sm="3">
+                        Hora partido
+                      </Form.Label>
+                      <Col sm="9">
+                        <Form.Control
+                          type="time"
+                          step="600"
+                          value={this.state.form.hour}
+                          onChange={this.cambioEstadoFormulario}
+                        />
+                      </Col>
+                    </Form.Group>
+
+                    <Form.Group as={Row} controlId="inputHour">
+                      <Form.Label column sm="3">
+
+                      </Form.Label>
+                      <Col sm="9" align="right">
+                        <Button type="submit">Crear Evento</Button>
+                      </Col>
+                    </Form.Group>
                   </Form>
                 </Modal.Body>
-                {/* <Modal.Footer>
-                  <Button variant="danger" onClick={handleClose}>
-                    Cerrar
-                  </Button>
-                  <Button variant="success" onClick={handleClose}>
-                    Crear partido
-                  </Button>
-                </Modal.Footer> */}
               </Modal>
             </Col>
           </Row>
