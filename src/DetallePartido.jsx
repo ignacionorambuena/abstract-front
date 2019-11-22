@@ -8,7 +8,6 @@ const getPartido = `${apiConfig.apiEvento.getPartido}`;
 const mapStyles = {
     width: '93%',
     height: '120px',
-    border: '1px solid red',
     position: 'absolute',
     left: 0,
     right: 0,
@@ -27,7 +26,7 @@ class DetallePartido extends Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         let id = this.props.match.params.id;
         axios.get(`${getPartido}/${id}`)
             .then(res => {
@@ -43,7 +42,7 @@ class DetallePartido extends Component {
                 <Row>
                     <Col lg={12}><h1 className="text-capitalize">{this.state.detallePartido.nombre}</h1></Col>
                     <Col lg={6}>
-                        <Card className="mb-3">
+                        <Card className="">
                             <Card.Body>
                                 <h6 className="pb-3">Información del partido</h6>
                                 <p><b>Fecha y Hora </b>: {this.state.detallePartido.fecha} {this.state.detallePartido.hora}</p>
@@ -60,7 +59,7 @@ class DetallePartido extends Component {
                                         <p><b>Calle </b>: {this.state.recinto.address}, {this.state.recinto.number}</p>
                                         <p><b>Comuna </b>: {this.state.recinto.common}</p>
                                     </Col>
-                                    <Col lg={12} className="text-center h-100">
+                                    <Col lg={12} className="text-center">
                                         {
                                             this.state.lat !== '' ?
                                                 <Map
@@ -80,7 +79,9 @@ class DetallePartido extends Component {
                     </Col>
                     <Col lg={6}>
                         <Card className="mb-3">
-                            <Card.Body>This is some text within a card body.</Card.Body>
+                            <Card.Body>
+                                <h6 className="pb-3">Invita a un amigo</h6>
+                            </Card.Body>
                         </Card>
                     </Col>
                 </Row>

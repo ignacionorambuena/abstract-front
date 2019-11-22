@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 import apiConfig from "./config/api";
 const getPartidos = `${apiConfig.apiEvento.getPartidos}`;
+const deletePartido = `${apiConfig.apiEvento.deletePartido}`;
 
 class ListadoPartido extends Component {
     constructor(props) {
@@ -21,6 +22,22 @@ class ListadoPartido extends Component {
                 if (res.data.length > 0) {
                     this.setState({ listadoPartido: res.data });
                 }
+            });
+    }
+
+    refreshPage = () => {
+        window.location.reload(false);
+    }
+
+    handleDelete = (id) => {
+        console.log(id);
+        axios.delete(`${deletePartido}/${id}`)
+            .then(res => {
+                if (res.data.length > 0) {
+                    console.log('eliminado')
+                    this.refreshPage();
+                }
+
             });
     }
 
@@ -40,11 +57,12 @@ class ListadoPartido extends Component {
                         {this.state.listadoPartido.map((x, ind) => {
                             return (
                                 <tr key={ind}>
-                                    <td>{x.fecha}</td>
+                                    <td>{x.fecha} {x.hora}</td>
                                     <td>{x.nombre}</td>
                                     <td>{x.tipopartido}</td>
                                     <td>
-                                        <Button href={'/detalle-partido/' + x.idpar} variant="success" size="sm">Ver</Button>
+                                        <Button href={'/detalle-partido/' + x.idpar} variant="success" size="sm" className="mr-2">Ver</Button>
+                                        <Button onClick={() => this.handleDelete(x.idpar)} variant="danger" size="sm">Eliminar</Button>
                                     </td>
                                 </tr>
                             )
@@ -58,7 +76,7 @@ class ListadoPartido extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        listado: state.listado
+        listado: state.listadoPartido
     }
 }
 export default connect(mapStateToProps)(ListadoPartido);

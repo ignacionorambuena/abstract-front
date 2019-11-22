@@ -5,6 +5,8 @@ const apiEvento = {
     getRecintoDeportivo: `${host}/recintoDeportivo`,
     getPartidos: `${host}/listaPartidos`,
     getPartido: `${host}/detallePartido`,
+    insertPartido: `${host}/insertarEvento`,
+    deletePartido: `${host}/deleteEvento`,
 };
 
 const uriConfig = {
