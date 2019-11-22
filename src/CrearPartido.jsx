@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Modal, Button, Form } from 'react-bootstrap'
+import { Row, Col, Modal, Button, Form } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ import apiConfig from "./config/api";
 const tipoPartido = `${apiConfig.apiEvento.getTipoPartido}`;
 const recintoDeportivo = `${apiConfig.apiEvento.getRecintoDeportivo}`;
 
-class ListadoPartidos extends Component {
+class CrearEvento extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +40,7 @@ class ListadoPartidos extends Component {
       });
   }
 
-  cambioEstadoFormulario = (evento) => {
+  changeStateForm = (evento) => {
     const data = this.state.form;
     const ident = (typeof evento === "object") ? evento.target.id : "";
     // debugger;
@@ -72,41 +72,58 @@ class ListadoPartidos extends Component {
     this.setState({ form: data });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = () => {
+    const data = this.state.form;
 
-    const title = this.getTitle.value;
-    const message = this.getMessage.value;
-    const data = {
-      id: new Date(),
-      title,
-      message
-    }
     this.props.dispatch({
-      type: 'ADD_EVENTO',
+      type: 'CREAR_EVENTO',
       data
     });
-    this.getTitle.value = '';
-    this.getMessage.value = '';
+
+    this.setState({
+      form: {
+        name: '',
+        tipoPartido: '',
+        recintoDeportivo: '',
+        date: '',
+        hour: ''
+      }
+    });
   }
 
   render() {
-    console.log(this.state)
     const handleShow = () => {
-      this.setState({ show: true });
+      this.setState({
+        show: true,
+        form: {
+          name: '',
+          tipoPartido: '',
+          recintoDeportivo: '',
+          date: '',
+          hour: ''
+        }
+      });
     }
 
     const handleClose = () => {
-      this.setState({ show: false });
+      this.setState({
+        show: false,
+        form: {
+          name: '',
+          tipoPartido: '',
+          recintoDeportivo: '',
+          date: '',
+          hour: ''
+        }
+      });
     }
     return (
       <div>
-        <Container className="container py-4">
           <Row>
             <Col lg={8}>
               <h1>Listado de partidos</h1>
             </Col>
-            <Col lg={4}>
+            <Col lg={4} className="text-right">
               <Button variant="primary" onClick={handleShow}>
                 Crear partido
               </Button>
@@ -121,7 +138,6 @@ class ListadoPartidos extends Component {
                   <Modal.Title>Crear evento</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  {JSON.stringify(this.state.form)}
                   <Form onSubmit={this.handleSubmit}>
                     <Form.Group as={Row} controlId="inputName">
                       <Form.Label column sm="3">
@@ -131,7 +147,7 @@ class ListadoPartidos extends Component {
                         <Form.Control
                           type="text"
                           value={this.state.form.name}
-                          onChange={this.cambioEstadoFormulario}
+                          onChange={this.changeStateForm}
                           placeholder="Barcelona VS Real Madrid"
                         />
                       </Col>
@@ -144,7 +160,7 @@ class ListadoPartidos extends Component {
                       <Col sm="9">
                         <Form.Control
                           as="select"
-                          onChange={this.cambioEstadoFormulario}
+                          onChange={this.changeStateForm}
                         >
                           <option>Seleccione</option>
                           {
@@ -163,7 +179,7 @@ class ListadoPartidos extends Component {
                       <Col sm="9">
                         <Form.Control
                           as="select"
-                          onChange={this.cambioEstadoFormulario}
+                          onChange={this.changeStateForm}
                         >
                           <option>Seleccione</option>
                           {
@@ -183,7 +199,7 @@ class ListadoPartidos extends Component {
                         <Form.Control
                           type="date"
                           value={this.state.form.date}
-                          onChange={this.cambioEstadoFormulario}
+                          onChange={this.changeStateForm}
                         />
                       </Col>
                     </Form.Group>
@@ -197,7 +213,7 @@ class ListadoPartidos extends Component {
                           type="time"
                           step="600"
                           value={this.state.form.hour}
-                          onChange={this.cambioEstadoFormulario}
+                          onChange={this.changeStateForm}
                         />
                       </Col>
                     </Form.Group>
@@ -215,7 +231,6 @@ class ListadoPartidos extends Component {
               </Modal>
             </Col>
           </Row>
-        </Container>
       </div>
     );
   }
@@ -223,7 +238,7 @@ class ListadoPartidos extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    posts: state
+    listado: state.listado
   }
 }
-export default connect(mapStateToProps)(ListadoPartidos);
+export default connect(mapStateToProps)(CrearEvento);

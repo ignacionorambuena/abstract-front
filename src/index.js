@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import tipoPartidoReducer from '../src/components/ListadoPartidos/reducer';
+import partidoReducer from './reducers/partidoReducer';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
-const store = createStore(tipoPartidoReducer);
+const store = createStore(partidoReducer);
 
 ReactDOM.render(
     <Provider store={store}>
