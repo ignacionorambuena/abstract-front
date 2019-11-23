@@ -1,18 +1,19 @@
 const host = "https://abstract-inorambuena.herokuapp.com";
 
 const apiEvento = {
-    getTipoPartido: `${host}/tipoPartido`,
-    getRecintoDeportivo: `${host}/recintoDeportivo`,
-    getPartidos: `${host}/listaPartidos`,
-    getPartido: `${host}/detallePartido`,
-    insertPartido: `${host}/insertarEvento`,
-    deletePartido: `${host}/deleteEvento`,
-    //Invitados
-    getInvitados: `${host}/listadoInvitados`,
-    insertInvitado: `${host}/insertarInvitado`,
-    deleteInvitado: `${host}/deleteInvitado`,
-    confirmarInvitado: `${host}/confirmarInvitado`,
-    rechazarInvitado: `${host}/rechazarInvitado`,
+    //Partido
+    getTipoPartido: `${host}/partido/tipo-partido`,
+    getRecintoDeportivo: `${host}/partido/recinto-deportivo`,
+    getPartidos: `${host}/partido/listado`,
+    getPartido: `${host}/partido/detalle`,
+    insertPartido: `${host}/partido/insertar`,
+    deletePartido: `${host}/partido/eliminar`,
+    //Invitado
+    getInvitados: `${host}/invitado/listado`,
+    insertInvitado: `${host}/invitado/insertar`,
+    deleteInvitado: `${host}/invitado/eliminar`,
+    confirmarInvitado: `${host}/invitado/confirmar`,
+    rechazarInvitado: `${host}/invitado/rechazar`,
 };
 
 const uriConfig = {
