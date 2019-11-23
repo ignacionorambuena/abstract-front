@@ -30,11 +30,9 @@ class ListadoPartido extends Component {
     }
 
     handleDelete = (id) => {
-        console.log(id);
         axios.delete(`${deletePartido}/${id}`)
             .then(res => {
-                if (res.data.length > 0) {
-                    console.log('eliminado')
+                if (res.data==='ELIMINADO') {
                     this.refreshPage();
                 }
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col, Card } from 'react-bootstrap'
+import { Row, Col, Card, Button } from 'react-bootstrap'
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import apiConfig from "./config/api";
+import InvitarAmigo from './InvitarAmigo';
 const getPartido = `${apiConfig.apiEvento.getPartido}`;
 const mapStyles = {
     width: '93%',
@@ -15,6 +16,10 @@ const mapStyles = {
     bottom: 0
 };
 
+const styleCard = {
+    paddingBottom: "120px"
+}
+
 class DetallePartido extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +27,7 @@ class DetallePartido extends Component {
             detallePartido: [],
             recinto: [],
             lat: '',
-            lon: ''
+            lon: '',
         };
     }
 
@@ -40,17 +45,17 @@ class DetallePartido extends Component {
         return (
             <div>
                 <Row>
-                    <Col lg={12}><h1 className="text-capitalize">{this.state.detallePartido.nombre}</h1></Col>
+                    <Col lg={12}><Button href="/" variant="info" size="sm">Volver</Button> <h1 className="text-capitalize">{this.state.detallePartido.nombre}</h1></Col>
                     <Col lg={6}>
-                        <Card className="">
+                        <Card className="mb-2">
                             <Card.Body>
                                 <h6 className="pb-3">Información del partido</h6>
                                 <p><b>Fecha y Hora </b>: {this.state.detallePartido.fecha} {this.state.detallePartido.hora}</p>
                                 <p><b>Tipo </b>: {this.state.detallePartido.tipopartido}</p>
                             </Card.Body>
                         </Card>
-                        <Card className="h-100">
-                            <Card.Body className="h-100">
+                        <Card style={styleCard}>
+                            <Card.Body>
                                 <Row>
                                     <Col lg={12}>
                                         <h6 className="pb-3">Información del recinto</h6>
@@ -61,7 +66,7 @@ class DetallePartido extends Component {
                                     </Col>
                                     <Col lg={12} className="text-center">
                                         {
-                                            this.state.lat !== '' ?
+                                            this.state.lat !== '' && this.state.recinto.latLong !== ' ' ?
                                                 <Map
                                                     google={this.props.google}
                                                     zoom={14}
@@ -81,6 +86,7 @@ class DetallePartido extends Component {
                         <Card className="mb-3">
                             <Card.Body>
                                 <h6 className="pb-3">Invita a un amigo</h6>
+                                <InvitarAmigo data={{ id: this.props.match.params.id }} />
                             </Card.Body>
                         </Card>
                     </Col>

@@ -7,6 +7,12 @@ const apiEvento = {
     getPartido: `${host}/detallePartido`,
     insertPartido: `${host}/insertarEvento`,
     deletePartido: `${host}/deleteEvento`,
+    //Invitados
+    getInvitados: `${host}/listadoInvitados`,
+    insertInvitado: `${host}/insertarInvitado`,
+    deleteInvitado: `${host}/deleteInvitado`,
+    confirmarInvitado: `${host}/confirmarInvitado`,
+    rechazarInvitado: `${host}/rechazarInvitado`,
 };
 
 const uriConfig = {
