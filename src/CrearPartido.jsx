@@ -82,11 +82,7 @@ class CrearEvento extends Component {
     let data = this.state.form;
     axios.post(`${insertPartido}`, data)
       .then(res => {
-        console.log(res);
         this.refreshPage();
-        // if (res.data.length > 0) {
-        //     this.setState({ listaTipoPartido: res.data });
-        // }
       }).catch(err => console.log(err));
 
     this.setState({
